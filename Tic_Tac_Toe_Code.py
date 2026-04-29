@@ -6,7 +6,7 @@
 class TicTacToe():
      
     def __init__(self):
-        self.board = [[' ',' ',' '],
+        self.board = [[' ',' ',' '], # This is the playing board
                       [' ',' ',' '],
                       [' ',' ',' ']]
         self.turn_counter = 0
@@ -17,16 +17,16 @@ class TicTacToe():
     def print_board(self):
         
         print(f"SCORE:\nX: {self.x_win_count} O: {self.o_win_count}")
-        print("--------------")
+        print("--------------\n")
         for row in self.board:
-            print(row)
+            print(row, "\n")
         print("--------------")
 
     def play(self):
         
         game_end = False
 
-        while not game_end:
+        while not game_end: # Allows multiple games & turns to be played
 
             self.print_board()
 
@@ -47,21 +47,26 @@ class TicTacToe():
                     column = int(input("Please enter the column (0-2): "))
 
                     if (row < 0) or(row > 2) or (column < 0) or (column > 2): # Input out of range, asks the player again
+                        print("\n" * 10)
                         self.print_board()
                         print("Input must be between 0 and 2, please try again.")
                     elif (self.board[row][column] != ' '): # Space already filled, asks the player again
+                        print("\n" * 10)
                         self.print_board()
                         print("That space is already filled, please try again.")
                     else:
                         valid_move = True
 
                 except ValueError: # If input is anything else other than an integer
+                    print("\n" * 10)
                     self.print_board()
                     print("Input must be an integer, please try again")
             
                 
             self.board[row][column] = player
             self.turn_counter += 1
+
+            print("\n" * 10) # Creates space between boards (for better visibility)
 
             if self.check_winner(player):
                 
@@ -74,7 +79,7 @@ class TicTacToe():
                     print(f"{player}'s Number of Wins: {self.o_win_count}")
 
                 if not self.replay():
-                    game_end = True
+                    game_end = True # Exits the while loop
 
             elif self.is_draw():
                 
@@ -83,7 +88,7 @@ class TicTacToe():
                 print(f"DRAW!")
 
                 if not self.replay():
-                    game_end = True
+                    game_end = True # Exits the while loop
 
             # When there is no winner or no draw, the game continues like normal
 
@@ -127,13 +132,14 @@ class TicTacToe():
         return True
     
     def replay(self):
-        play_again = input("Type YES to play again!: ").upper()
+        play_again = input("Type YES to play again!: ").upper() # Any capitalization of 'yes' continues the games
         
         if play_again == "YES":
             self.clear_board()
+            print("\n" * 10)
             return True
         else:
-            print("Thank you for playing!")
+            print("Thank you for playing!") # End of games
             return False
 
 
